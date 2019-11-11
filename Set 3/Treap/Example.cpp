@@ -25,6 +25,7 @@ int main(){
     }
 
     Treap<int, int> treap2;       // Randomised Mode
+    treap2.set_default_value(0);
     treap2.insert(5,1);
     treap2.insert(67,2);
     treap2.insert(23,3);
@@ -35,8 +36,11 @@ int main(){
     treap2.insert(50,8);
     treap2.insert(6,9);
     treap2.insert(24,10);
-    treap2.set_default_value(0);
+    treap2[24] = 12;
 
+    for(auto x : treap2){
+        std::cout << x.tree_key << " : " << x.heap_key << " : " << x.value << std::endl;
+    }
 
     return 0;
 }

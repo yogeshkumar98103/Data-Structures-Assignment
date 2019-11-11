@@ -320,7 +320,6 @@ template<typename key_t, typename value_t, unsigned long initial_size>
 HashTable<key_t, value_t, initial_size, Seperate_Chaining>::
 HashTable(Hash_Module<key_t>&& hash_module_):base_t(hash_module_){}
 
-
 template<typename key_t, typename value_t, unsigned long initial_size>
 HashTable<key_t, value_t, initial_size, Seperate_Chaining>::
 ~HashTable(){
@@ -407,6 +406,33 @@ search_key(const key_t &key, unsigned long int &saved_index){
     return false;
 }
 
+template<typename key_t, typename value_t, unsigned long initial_size>
+typename HashTable<key_t, value_t, initial_size, Seperate_Chaining>::hash_node_t 
+remove(const key_t& key){
+    unsigned long int saved_index;
+    if(this->search_key(key, saved_index)){
+        hash_node_t* current = this->hash_table[hash];
+        hash_node_t* prev = nullptr;
+        while(current != nullptr){
+            if(current->key == key){
+                this->cache_available = true;
+                this->cached_node = current;
+                if(prev == nullptr){
+                    this->hash_table[saved_index] = current->next;
+                }
+                else{
+                    prev->next = current->next;
+                }
+                current->next = nullptr;
+                return (*current);
+            }
+            prev = current;
+            current = current->next;
+        }
+    }
+
+    throw "Element Doesn't Exist";
+}
 
 // ------------------------ Open Addressing ------------------------
 
@@ -496,4 +522,17 @@ search_key(const key_t &key, unsigned long int &saved_index) {
 
     saved_index = index;
     return false;
+}
+
+template<typename key_t, typename value_t, unsigned long initial_size>
+typename HashTable<key_t, value_t, initial_size, Open_Addressing>::hash_node_t 
+remove(const key_t& key){
+    unsigned long int saved_index;
+    if(this->search_key(key, saved_index)){
+        hash_node_t* ret = this->hash_table[saved_index];
+        this->hash_table[saved_index] = this->TOMBSTONE;
+        return (*ret);
+    }
+
+    throw "Element Doesn't Exist";
 }

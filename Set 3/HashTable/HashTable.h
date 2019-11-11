@@ -25,10 +25,13 @@ enum Access_Behaviour{
 //                           Data Nodes
 // ===================================================================
 
+template <typename key_t, typename value_t, typename hash_node_t, unsigned long int initial_size>
+class Base_HashTable;
+
 template <typename key_t, typename value_t>
 struct hash_node_seperate_chaining{
     key_t key;
-    value_t value;
+    value_t value;  
     hash_node_seperate_chaining<key_t, value_t>* next;
 };
 
@@ -214,6 +217,7 @@ class HashTable<key_t, value_t, initial_size, Seperate_Chaining>
 
     ~HashTable();
 
+  private:
     void copy_values_to_new_hash_table(hash_node_t** new_hash_table, unsigned long int old_capacity) override;
 
     void insert_to_hash_table(hash_node_t* new_node, hash_node_t** hash_table) override;
@@ -221,6 +225,9 @@ class HashTable<key_t, value_t, initial_size, Seperate_Chaining>
     void insert_at_index(unsigned long int index, hash_node_t* new_node) override;
 
     bool search_key(const key_t& key, unsigned long int& saved_index) override;
+
+  public:
+    hash_node_t remove(const key_t& key);
 };
 
 // ------------------------ Open Addressing ------------------------
@@ -240,6 +247,7 @@ class HashTable<key_t, value_t, initial_size, Open_Addressing>
 
     ~HashTable();
 
+  private:
     void copy_values_to_new_hash_table(hash_node_t** new_hash_table, unsigned long int old_capacity) override;
 
     void insert_to_hash_table(hash_node_t* new_node, hash_node_t** hash_table) override;
@@ -247,6 +255,9 @@ class HashTable<key_t, value_t, initial_size, Open_Addressing>
     void insert_at_index(unsigned long int index, hash_node_t* new_node) override;
 
     bool search_key(const key_t& key, unsigned long int& saved_index) override;
+
+  public:
+    hash_node_t remove(const key_t& key);
 };
 
 #include "HashTable.cpp"

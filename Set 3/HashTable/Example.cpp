@@ -18,5 +18,10 @@ int main(){
         std::cout << (char)i << " : " << count[i] << std::endl;
     }
 
+    count.delete('a');
+
+    for(int i = 97; i <= 122; i++){
+        std::cout << (char)i << " : " << count[i] << std::endl;
+    }
     return 0;
 }

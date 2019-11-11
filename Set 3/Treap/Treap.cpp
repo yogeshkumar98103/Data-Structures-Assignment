@@ -357,23 +357,23 @@ operator!=(const typename Base_Treap<tree_key_t, value_t, heap_key_t>::iterator 
 
 // --------------------------  Manual Mode ----------------------------
 
-template <typename tree_key_t, typename value_t, typename heap_key_t>
+template<typename tree_key_t, typename value_t, typename heap_key_t>
 Treap<tree_key_t, value_t, heap_key_t>::
 Treap():base_treap_t(){}
 
-template <typename tree_key_t, typename value_t, typename heap_key_t>
+template<typename tree_key_t, typename value_t, typename heap_key_t>
 void Treap<tree_key_t, value_t, heap_key_t>::
 insert(const tree_key_t &tree_key, const heap_key_t &heap_key, const value_t &value){
     this->insert_key(tree_key, heap_key, value);
 }
 
-template <typename tree_key_t, typename value_t, typename heap_key_t>
+template<typename tree_key_t, typename value_t, typename heap_key_t>
 typename Treap<tree_key_t, value_t, heap_key_t>::iterator &Treap<tree_key_t, value_t, heap_key_t>::
 operator[](const tree_key_t &tree_key){
     return this->search(tree_key);
 }
 
-template <typename tree_key_t, typename value_t, typename heap_key_t>
+template<typename tree_key_t, typename value_t, typename heap_key_t>
 value_t &Treap<tree_key_t, value_t, heap_key_t>::
 operator[](const std::pair<const tree_key_t, const heap_key_t> &key){
     treap_node_t* saved_parent;
@@ -396,7 +396,7 @@ operator[](const std::pair<const tree_key_t, const heap_key_t> &key){
 
 // ------------------------- Randomised Mode --------------------------
 
-template <typename tree_key_t, typename value_t>
+template<typename tree_key_t, typename value_t>
 Treap<tree_key_t, value_t, void>::
 Treap():base_treap_t(){
     // Setup Random Number Generator
@@ -406,14 +406,14 @@ Treap():base_treap_t(){
     uniform = std::uniform_real_distribution<double>(0, 1);
 }
 
-template <typename tree_key_t, typename value_t>
+template<typename tree_key_t, typename value_t>
 void Treap<tree_key_t, value_t, void>::
 insert(const tree_key_t &tree_key, const value_t &value){
     double heap_key = uniform(RNGenerator);
     this->insert_key(tree_key, heap_key, value);
 }
 
-template <typename tree_key_t, typename value_t>
+template<typename tree_key_t, typename value_t>
 value_t &Treap<tree_key_t, value_t, void>::
 operator[](const tree_key_t &tree_key){
     treap_node_t* saved_parent;
